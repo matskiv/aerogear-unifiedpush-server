@@ -21,12 +21,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.google.android.gcm.server.Sender;
+
 import org.jboss.aerogear.unifiedpush.message.util.ConfigurationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConfigurableFCMSender extends Sender {
-	
+
 	public static final String CUSTOM_AEROGEAR_FCM_PUSH_HOST = "custom.aerogear.fcm.push.host";
-	
+
 	public static final String FCM_ENDPOINT_HOST = "https://fcm.googleapis.com/fcm/send";
 
 	public ConfigurableFCMSender(String key) {
@@ -35,11 +38,15 @@ public class ConfigurableFCMSender extends Sender {
 
 	@Override
 	protected HttpURLConnection getConnection(String url) throws IOException {
-		
+
 		// let's see if there is a different URL we should post to (e.g. load/stress testing)
 		final String fcmURL = ConfigurationUtils.tryGetProperty(CUSTOM_AEROGEAR_FCM_PUSH_HOST, FCM_ENDPOINT_HOST);
-		
+
+		final Logger logger = LoggerFactory.getLogger(ConfigurableFCMSender.class);
+        logger.warn("fcmURL"+fcmURL);//WIP
+        logger.warn("FCM_ENDPOINT_HOST"+FCM_ENDPOINT_HOST);//WIP
+
 		return (HttpURLConnection) new URL(fcmURL).openConnection();
 	}
-	
+
 }

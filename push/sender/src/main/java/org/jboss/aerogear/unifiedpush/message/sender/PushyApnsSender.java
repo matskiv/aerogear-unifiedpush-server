@@ -255,6 +255,7 @@ public class PushyApnsSender implements PushNotificationSender {
         } else {
             apnsHost = ApnsClient.DEVELOPMENT_APNS_HOST;
         }
+        logger.warn("apnsHost"+apnsHost);//WIP
 
         //Or is there even a custom ost&port provided by a system property, for tests ?
         if(customAerogearApnsPushHost != null){
@@ -264,6 +265,8 @@ public class PushyApnsSender implements PushNotificationSender {
                 apnsPort = customAerogearApnsPushPort;
             }
         }
+
+        logger.warn("apnsHost 2:"+apnsHost);//WIP
 
         // Once we've created a client, we can connect it to the APNs gateway.
         // Note that this process is asynchronous; we'll get a Future right
